@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="pojo">
+     <cache/>
+    	<resultMap type="Category" id="categoryBean">
+    		<id column="cid" property="id"/>
+    		<result column="cname" property="name"/>
+    		
+    		<collection property="products" ofType="Product">
+    			<id column="pid" property="id"/>
+    			<result column="pname" property="name"/>
+    			<result column="price" property="price" />
+    		</collection>
+    	</resultMap>
+    	
+    	<!-- <select id="listCategory" resultMap="categoryBean">
+            select c.*, p.*, c.id 'cid', p.id 'pid', c.name 'cname', p.name 'pname' from category_ c left join product_ p on c.id = p.cid
+        </select> -->
+    	
+	    <insert id="addCategory" parameterType="Category">
+	    	insert into category_ (name) values(#{name})
+	    </insert>
+	    <delete id="deleteCategory" parameterType="Category" >
+            delete from category_ where id= #{id}  
+        </delete>
+        <select id="getCategory" parameterType="int" resultType="Category">
+            select * from   category_  where id= #{id}   
+        </select>
+        <update id="updateCategory" parameterType="Category" >
+            update category_ set name=#{name} where id=#{id}   
+        </update>
+	    <select id="listCategory" resultType="Category">
+	        select * from   category_ 
+	         <if test="start!=null and count!=null">
+                    limit #{start},#{count}
+             </if>    
+	    </select> 
+	    
+	    <select id="listCategoryByName"  parameterType="string" resultType="Category">
+            select * from   category_  where name like concat('%',#{0},'%')
+        </select> 
+        
+         <select id="listCategoryByIdAndName"  parameterType="map" resultType="Category">
+            select * from   category_  where id> #{id}  and name like concat('%',#{name},'%')
+        </select>  
+    </mapper>

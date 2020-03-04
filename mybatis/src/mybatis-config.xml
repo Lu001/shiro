@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<settings>
+	<!-- 打开延迟加载的开关 --> 
+	<setting name="lazyLoadingEnabled" value="true"/>
+	<!-- 将积极加载改为消息加载即按需加载 --> 
+	<setting name="aggressiveLazyLoading" value="false"/>
+	
+	 <setting name="cacheEnabled" value="true"/>
+</settings>
+<typeAliases>
+	 <package name="pojo"/>
+</typeAliases>
+
+<environments default="development">
+	<environment id="development">
+		<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+			<property name="driver" value="com.mysql.jdbc.Driver"/>
+			<property name="url" value="jdbc:mysql://localhost:3306/how2java?characterEncoding=UTF-8"/>
+			<property name="username" value="root"/>
+			<property name="password" value="1234"/>
+			</dataSource>
+	</environment>
+</environments>
+<mappers>
+	<mapper resource="pojo/Category.xml"/>
+	<mapper resource="pojo/Product.xml"/>
+	<mapper resource="pojo/Order.xml"/>
+	<mapper class="mapper.CategoryMapper"/> 
+    <mapper class="mapper.ProductMapper"/> 
+</mappers>
+</configuration>
